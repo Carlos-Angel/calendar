@@ -62,6 +62,10 @@ export const CalendarModal = () => {
       setFormValues(activeEvent);
       setDateStart(activeEvent.start);
       setDateEnd(activeEvent.end);
+    } else {
+      setFormValues(initEvent);
+      setDateStart(now.toDate());
+      setDateEnd(nowPlus1.toDate());
     }
   }, [activeEvent]);
 
