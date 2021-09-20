@@ -21,6 +21,13 @@ const customStyles = {
 const now = moment().minutes(0).second(0).add(1, 'hours');
 const nowPlus1 = now.clone().add(1, 'hours');
 
+const initEvent = {
+  title: '',
+  notes: '',
+  start: now.toDate(),
+  end: nowPlus1.toDate(),
+};
+
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
@@ -41,12 +48,7 @@ export const CalendarModal = () => {
     setFormValues({ ...formValues, end: e });
   };
 
-  const [formValues, setFormValues] = useState({
-    title: '',
-    notes: '',
-    start: now.toDate(),
-    end: nowPlus1.toDate(),
-  });
+  const [formValues, setFormValues] = useState(initEvent);
 
   const { notes, title, start, end } = formValues;
   const handleInputChange = ({ target }) => {
@@ -54,6 +56,9 @@ export const CalendarModal = () => {
   };
 
   const closeModal = () => {
+    setFormValues(initEvent);
+    setDateStart(now.toDate());
+    setDateEnd(nowPlus1.toDate());
     dispatch(uiCloseModal());
   };
 
