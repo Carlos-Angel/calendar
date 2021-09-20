@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import Modal from 'react-modal';
+import Sawl from 'sweetalert2';
 
 const customStyles = {
   content: {
@@ -22,6 +23,7 @@ Modal.setAppElement('#root');
 export const CalendarModal = () => {
   const [dateStart, setDateStart] = useState(now.toDate());
   const [dateEnd, setDateEnd] = useState(nowPlus1.toDate());
+  const [titleValid, setTitleValid] = useState(true);
 
   const handleStartEvent = (e) => {
     setDateStart(e);
@@ -40,18 +42,34 @@ export const CalendarModal = () => {
     end: nowPlus1.toDate(),
   });
 
-  const { notes, title } = formValues;
+  const { notes, title, start, end } = formValues;
   const handleInputChange = ({ target }) => {
     setFormValues({ ...formValues, [target.name]: target.value });
   };
 
   const closeModal = () => {
     console.log('close');
+    // TODO: close modal
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues);
+    const momentStart = moment(start);
+    const momentEnd = moment(end);
+    if (momentStart.isSameOrAfter(momentEnd)) {
+      return Sawl.fire(
+        'Error',
+        'La fecha y hora fin debe ser mayor a la fecha y hora inicio',
+        'error',
+      );
+    }
+    if (title.trim().length < 2) {
+      setTitleValid(false);
+    } else {
+      // TODO: guardar datos
+      setTitleValid(true);
+      closeModal();
+    }
   };
 
   return (
@@ -91,11 +109,16 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type='text'
-            className='form-control'
+            className={`form-control ${!titleValid && 'is-invalid'}`}
             placeholder='Título del evento'
             name='title'
             value={title}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              handleInputChange(e);
+              if (e.target.value.length > 2) {
+                setTitleValid(true);
+              }
+            }}
             autoComplete='off'
           />
           <small id='emailHelp' className='form-text text-muted'>
