@@ -3,4 +3,6 @@ export const types = {
   logout: '[auth] logout',
   uiOpenModal: '[ui] openModal',
   uiCloseModal: '[ui] closeModal',
+  eventAddNew: '[event] addNew',
+  eventSetActive: '[event] setActive',
 };

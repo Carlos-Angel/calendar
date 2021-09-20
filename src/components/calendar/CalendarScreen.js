@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-spanish';
 import { CalendarEvent } from './CalendarEvent';
@@ -9,24 +9,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment/locale/es';
 import { CalendarModal } from './CalendarModal';
 import { uiOpenModal } from '../../actions/ui';
+import { eventSetActive } from '../../actions/events';
+import { AddNewFab } from '../ui/AddNewFab';
 moment.locale('es');
 const localizer = momentLocalizer(moment);
 
-const events = [
-  {
-    title: 'title event 01',
-    start: moment().toDate(),
-    end: moment().add(2, 'hours').toDate(),
-    bgcolor: '#fafafa',
-    notes: 'note event',
-    user: {
-      _id: 'uid',
-      name: 'username',
-    },
-  },
-];
-
 export const CalendarScreen = () => {
+  const { events } = useSelector((state) => state.calendar);
   const dispatch = useDispatch();
 
   const [lastView, setLastView] = useState(
@@ -37,8 +26,9 @@ export const CalendarScreen = () => {
     dispatch(uiOpenModal());
   };
 
-  const onSelectEvent = (e) => {
-    console.log(e);
+  const onSelectEvent = (event) => {
+    dispatch(eventSetActive(event));
+    dispatch(uiOpenModal());
   };
 
   const onViewChange = (e) => {
@@ -77,6 +67,7 @@ export const CalendarScreen = () => {
         }}
       />
 
+      <AddNewFab />
       <CalendarModal />
     </div>
   );
