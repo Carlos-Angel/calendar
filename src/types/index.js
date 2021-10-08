@@ -8,4 +8,11 @@ export const types = {
   eventCleanActive: '[event] clearActive',
   eventUpdated: '[event] updated',
   eventDeleted: '[event] deleted',
+  authChecking: '[auth] checking state',
+  authCheckingFinish: '[auth] checking finish',
+  authStartLogin: '[auth] start login',
+  authLogin: '[auth] login',
+  authStartRegister: '[auth] start register',
+  authStartTokenRenew: '[auth] token renew',
+  authStartLogout: '[auth] logout',
 };
