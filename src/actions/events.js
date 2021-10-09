@@ -39,7 +39,21 @@ export const eventClearActive = (event) => ({
   type: types.eventCleanActive,
 });
 
-export const eventUpdated = (event) => ({
+export const eventStartUpdated = (event) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchWithToken(`event/${event.id}`, event, 'PUT');
+      const body = await resp.json();
+      if (body.ok) {
+        dispatch(eventUpdated(event));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const eventUpdated = (event) => ({
   type: types.eventUpdated,
   payload: event,
 });
