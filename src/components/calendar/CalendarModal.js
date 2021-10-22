@@ -32,7 +32,9 @@ const initEvent = {
   end: nowPlus1.toDate(),
 };
 
-Modal.setAppElement('#root');
+if(process.env.NODE_ENV !== 'test'){
+  Modal.setAppElement('#root');
+}
 
 export const CalendarModal = () => {
   const { modalOpen } = useSelector((state) => state.ui);
