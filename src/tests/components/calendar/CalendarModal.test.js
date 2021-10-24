@@ -5,11 +5,13 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { CalendarModal } from '../../../components/calendar/CalendarModal';
+import { eventStartUpdated, eventClearActive } from '../../../actions/events';
 import '@testing-library/jest-dom';
 
-// jest.mock('../../../actions/events', () => ({
-//   eventStartDelete: jest.fn(),
-// }));
+jest.mock('../../../actions/events', () => ({
+  eventStartUpdated: jest.fn(),
+  eventClearActive: jest.fn(),
+}));
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
@@ -46,7 +48,32 @@ const wrapper = mount(
 );
 
 describe('Pruebas en <CalendarModal />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('debe de mostrarse correctamente', () => {
     expect(wrapper.find('Modal').prop('isOpen')).toBe(true);
+  });
+
+  test('debe de llamar la acción de cerrar y abrir el Modal', () => {
+    wrapper.find('form').simulate('submit', {
+      preventDefault() {},
+    });
+
+    expect(eventStartUpdated).toHaveBeenCalledWith(
+      initialState.calendar.activeEvent,
+    );
+    expect(eventClearActive).toHaveBeenCalled();
+  });
+
+  test('debe de mostrar error si falta el titulo', () => {
+    wrapper.find('form').simulate('submit', {
+      preventDefault() {},
+    });
+
+    expect(wrapper.find('input[name="title"]').hasClass('is-invalid')).toBe(
+      true,
+    );
   });
 });
