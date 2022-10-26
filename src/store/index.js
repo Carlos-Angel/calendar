@@ -1,13 +1,7 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { rootReducers } from '../reducers';
 
-const composeEnhancers =
-  (typeof window !== 'undefined' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
 
-export const store = createStore(
-  rootReducers,
-  composeEnhancers(applyMiddleware(thunk)),
-);
+
+export * from './calendar/calendarSlice';
+export * from './ui/uiSlice';
+
+export * from './store';
