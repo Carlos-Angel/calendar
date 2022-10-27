@@ -1,35 +1,20 @@
-# calendar
+# [calendar app](https://app-calendar.netlify.app/login)
 
-Aplicación de un calendario para registrar las fechas de tus eventos importantes y favoritos para que no te pierdas ninguna fecha importante.
+Aplicación de un calendario para registrar tus eventos importantes y favoritos para que no te pierdas ninguna fecha importante.
 
-## `app`
+## Requerimientos
 
-[calendar app](https://app-calendar.netlify.app/login)
+- necesita el api que puede obtener en el siguiente enlace: [calendar-api](https://github.com/Carlos-Angel/calendar-api)
 
-## `calendar-api repository`
-
-[calendar-api repository](https://github.com/Carlos-Angel/calendar-backend)
-
-## `getting started`
+## Instrucciones
 
 ```bash
-# copy .env.development file to .env
-cp .env.development .env
-```
+# copy .env.dist file to .env
+cp .env.dist .env
 
-```shell
-# environments
-REACT_APP_API_URL='http://localhost:3001/api'
-```
-
-```bash
 # install dependencies
-npm install
-```
+yarn install
 
-## `production`
-
-```bash
 # run
-npm run start
+yarn dev
 ```

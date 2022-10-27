@@ -26,3 +26,6 @@ dist-ssr
 # locks
 yarn.locks
 package-lock.json
+
+# environments
+.env
